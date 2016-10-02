@@ -6,13 +6,23 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #
+[:admin, :gymleader, :user].each do |role|
+    Role.where({ name: role }, without_protection: true).first_or_create
+end
 
 25.times do
-  pokemon_name = Faker::Pokemon.name
+  user_name = Faker::Name.name
   User.create(
-    name: pokemon_name,
-    email: Faker::Internet.free_email(pokemon_name),
+    name: user_name,
+    email: Faker::Internet.free_email(user_name),
     password: '12341234',
     password_confirmation: '12341234'
+  )
+end
+25.times do
+  Pokemon.create(
+    name: Faker::Pokemon.name,
+    cp: Random.rand(200),
+    user_id: 1+Random.rand(24)
   )
 end

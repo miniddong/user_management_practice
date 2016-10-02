@@ -1,29 +1,13 @@
 <div class="row text-center">
-  <h1>Pokemon List</h1>
-</div>
-<div class="row text-center">
   <% if user_signed_in? %>
     <%= link_to "로그아웃", destroy_user_session_path, class: 'btn btn-danger', method: "DELETE" %>
+    <% if current_user.has_role? :user %>
+      <%= link_to "포켓몬 리스트 보기", pokemons_path %>
+      <%= link_to "포켓몬 만들기", new_pokemon_path(user_id: current_user), class: "btn btn-primary" %>
+  <% end %>
   <% else %>
-      <%= link_to "페이스북으로 로그인하기", user_facebook_omniauth_authorize_path, class: 'btm btn-primary' %>
+    <%= link_to "페이스북으로 로그인하기", user_facebook_omniauth_authorize_path, class: 'btn btn-primary' %>
     <%= link_to "로그인하기", new_user_session_path, class: 'btn btn-success' %>
     <%= link_to "가입하기", new_user_registration_path, class: 'btn btn-warning' %>
   <% end %>
 </div>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.each do |u| %>
-      <tr>
-        <td><%= u.name %></td>
-        <td><%= u.email %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
